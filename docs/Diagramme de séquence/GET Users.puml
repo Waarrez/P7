@@ -1,0 +1,18 @@
+@startuml
+
+title Get Phones diagramme de séquence
+
+participant CLIENT
+participant APP
+participant BDD
+
+CLIENT -> APP: Requête GET "/api/users"
+activate APP
+APP -> BDD  : Requête find all pour récupérer toutes les données
+activate BDD
+BDD --> APP : Retour de la requête (liste des users)
+deactivate BDD
+APP -> APP : Serialize DATA
+APP --> CLIENT : 200 (Liste des utilisateurs)
+
+@enduml

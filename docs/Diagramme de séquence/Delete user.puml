@@ -1,0 +1,30 @@
+@startuml
+
+title Delete User diagramme de séquence
+
+participant CLIENT
+participant APP
+participant BDD
+
+CLIENT -> APP: Requête DELETE "/api/users" JSON et envoie de token
+activate APP
+APP -> APP : Vérifie si le token et les données sont corrects
+
+alt Si valide
+  APP -> BDD : Récupérer le User (findById)
+   activate BDD
+  BDD --> APP: Retourne la réponse (Utilisateur supprimé)
+  deactivate BDD
+  APP --> CLIENT : Message "Utilisateur supprimé"
+  deactivate APP
+end
+
+alt Si token invalide
+   APP --> CLIENT: 401 Utilisateur non authentifié
+end
+
+alt Si id incorrect
+   APP --> CLIENT: 401 : Utilisateur n'existe pas
+end
+
+@enduml
