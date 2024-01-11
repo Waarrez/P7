@@ -1,0 +1,26 @@
+@startuml
+
+title Diagramme de cas utilisation
+
+actor Client as User
+
+usecase "Liste des téléphones" as ListPhones
+usecase "Liste des utilisateurs" as ListUsers
+usecase "Détail d'un utilisateur" as getUser
+usecase "Détail d'un téléphone" as Getphone
+usecase "Ajouter un utilisateur" as AddUser
+usecase "Supprimer un utilisateur" as DeleteUser
+usecase "Authentification" as Authenticate
+
+User --> ListPhones
+User --> Getphone
+User --> AddUser
+User --> DeleteUser
+User --> getUser
+User --> ListUsers
+getUser --> Authenticate : <<include>>
+ListUsers --> Authenticate : <<include>>
+DeleteUser --> Authenticate : <<include>>
+AddUser --> Authenticate : <<include>>
+
+@enduml

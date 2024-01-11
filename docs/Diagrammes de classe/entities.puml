@@ -1,0 +1,30 @@
+@startuml
+
+entity "Phone" {
+  + id : string
+  name : string
+  content : text
+  color : string
+  storage : int
+  price : float
+  image : string
+}
+
+entity "User" {
+  + id : string
+    name : string
+    client_id : string
+}
+
+entity "Client" {
+    + id : string
+      username : string
+      email : string
+      roles : array|json
+      password : string
+      createdAt : datetime
+}
+
+User "1" -- "0..*" Client
+
+@enduml

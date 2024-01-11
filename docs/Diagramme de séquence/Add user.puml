@@ -1,0 +1,32 @@
+@startuml
+
+title Add User diagramme de séquence
+
+participant CLIENT
+participant APP
+participant BDD
+
+CLIENT -> APP: Requête POST "/api/users" JSON et envoie de token
+activate APP
+APP -> APP : Vérifie si le token et les données sont corrects
+
+alt Si valide
+  APP -> APP : Deserialize data
+  APP -> BDD : Ajoute les données (users)
+  activate BDD
+  BDD --> APP: User créer
+  deactivate BDD
+  APP --> CLIENT : Confirmation enregistrement
+  deactivate APP
+end
+
+alt Si token non valide
+    APP --> CLIENT : 401 (Utilisateur non authentifié)
+    deactivate APP
+end
+
+alt Si données invalide
+    APP --> CLIENT : 401 Une erreur est survenue
+end
+
+@enduml

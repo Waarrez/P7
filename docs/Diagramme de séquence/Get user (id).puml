@@ -1,0 +1,26 @@
+@startuml
+
+title Get Phones diagramme de séquence
+
+participant CLIENT
+participant APP
+participant BDD
+
+CLIENT -> APP: Requête GET "/api/users/id"
+activate APP
+APP -> APP : Vérifie si données valide
+
+alt Si ID valide
+    APP -> BDD  : Récupére les données (findOneBy)
+    activate BDD
+    BDD --> APP : Retour de la requête
+    deactivate BDD
+    APP --> CLIENT : 200 OK
+end
+
+alt Si ID invalide
+    BDD --> APP : identifiant non trouvé
+    APP --> CLIENT : 400 ERREUR
+end
+
+@enduml

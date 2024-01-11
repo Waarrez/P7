@@ -1,0 +1,23 @@
+@startuml
+
+title Get Phones diagramme de séquence
+
+participant CLIENT
+participant APP
+participant BDD
+
+CLIENT -> APP: Requête GET "/api/login_check"
+activate APP
+APP -> APP : Deserialize DATA et vérification des données
+activate BDD
+
+alt Si valide
+    APP -> BDD : Vérification des données
+    APP --> CLIENT : Retour JWT TOKEN
+end
+
+alt Si non valide
+    APP --> CLIENT : 401 Utilisateur non authentifié
+end
+
+@enduml
