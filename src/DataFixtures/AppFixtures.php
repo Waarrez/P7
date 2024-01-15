@@ -24,14 +24,14 @@ class AppFixtures extends Fixture
         for($i = 0; $i <= 10; $i++) {
 
             $user = new User();
-            $user->setName("Nom n° $i");
+            $user->setUsername("Utilisateur n° $i");
 
             $client = new Client();
-            $client->setUsername("Utilisateur n° $i")
+            $client->setName("Nom n° $i")
                    ->setUser($user);
 
-            $hashPass = $this->hasher->hashPassword($client, "password");
-            $client->setPassword($hashPass);
+            $hashPass = $this->hasher->hashPassword($user, "password");
+            $user->setPassword($hashPass);
 
             $phone = new Phone();
             $phone->setName("Téléphone n° $i")
