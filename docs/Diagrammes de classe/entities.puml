@@ -12,17 +12,17 @@ entity "Phone" {
 
 entity "User" {
   + id : string
-    name : string
-    client_id : string
+    username : string
+    email : string
+    roles : array|json
+    password : string
+    createdAt : datetime
 }
 
 entity "Client" {
     + id : string
-      username : string
-      email : string
-      roles : array|json
-      password : string
-      createdAt : datetime
+     user_id : string
+     username : string
 }
 
 User "1" -- "0..*" Client
