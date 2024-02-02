@@ -1,9 +1,10 @@
 ## Documentation API Bilemo
 
 ### Prérequis
-- Avoir php 8.2
-- Avoir MYSQL
-- Avoir Postman
+- php 8.2
+- MYSQL
+- Postman
+- Composer 
 
 ### Initialisation du projet
 
