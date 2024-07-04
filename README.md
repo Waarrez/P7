@@ -4,7 +4,8 @@
 - php 8.2
 - MYSQL
 - Postman
-- Composer 
+- Composer
+- OpenSSL
 
 ### Initialisation du projet
 
@@ -25,6 +26,10 @@
 - #### Charger les fixtures pour la BDD
 
 ` php bin/console d:f:l --no-interaction `
+
+- ### Générer la clé privé et public JWT
+- ` openssl genrsa -out config/jwt/private.pem -aes256 4096 `
+- ` openssl rsa -pubout -in config/jwt/private.pem -out config/jwt/public.pem `
 
 ------------------------------------------
 
