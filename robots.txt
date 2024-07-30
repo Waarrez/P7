@@ -1,0 +1,32 @@
+# robots.txt for Symfony project
+
+# Autoriser tous les robots d'indexation
+User-agent: *
+
+# Interdire l'accès aux dossiers sensibles
+Disallow: /var/
+Disallow: /vendor/
+Disallow: /config/
+Disallow: /node_modules/
+Disallow: /public/bundles/
+Disallow: /public/assets/
+Disallow: /translations/
+Disallow: /src/
+Disallow: /templates/
+Disallow: /translations/
+Disallow: /private/
+
+# Interdire l'accès à certaines URL spécifiques
+Disallow: /admin/
+Disallow: /api/
+Disallow: /login
+Disallow: /register
+
+# Autoriser l'accès à certains répertoires (si nécessaire)
+Allow: /public/
+
+# Sitemap location
+Sitemap: https://example.com/sitemap.xml
+
+# Crawl delay for slower crawling (optional)
+Crawl-delay: 10

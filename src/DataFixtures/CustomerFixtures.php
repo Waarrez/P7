@@ -45,9 +45,4 @@ class CustomerFixtures extends Fixture
 
         $manager->flush();
     }
-
-    private function getItem(array $datas): mixed
-    {
-        return $datas[array_rand($datas)];
-    }
 }
