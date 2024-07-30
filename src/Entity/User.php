@@ -3,52 +3,46 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
 use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ApiResource(
-    normalizationContext: ["groups" => "users:read"],
-    denormalizationContext: ["groups" => "users:write"]
-)]
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+class User
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["users:read", "clients:read", "users:write"])]
+    #[Groups("users:read")]
     private ?int $id = null;
 
-    #[ORM\Column(length: 180, unique: true)]
-    #[Groups(["users:read", "clients:read", "users:write"])]
-    private ?string $username = null;
+    #[ORM\Column(length: 255)]
+    #[Groups("users:read")]
+    private ?string $firstName = null;
+
+    #[ORM\Column(length: 255)]
+    #[Groups("users:read")]
+    private ?string $lastName = null;
+
+    #[ORM\Column(length: 255)]
+    #[Groups("users:read")]
+    private ?string $email = null;
+
+    #[ORM\Column(length: 255)]
+    #[Groups("users:read")]
+    private ?string $phoneNumber = null;
 
     #[ORM\Column]
-    #[Groups(["users:read", "clients:read", "users:write"])]
-    private array $roles = [];
-
-    /**
-     * @var string The hashed password
-     */
-    #[ORM\Column]
-    private ?string $password = null;
-
-    #[ORM\Column]
-    #[Groups(["users:read", "clients:read", "users:write"])]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Client::class)]
-    #[Groups(["users:read", "users:write"])]
-    private Collection $clients;
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    private ?Customer $customer = null;
 
-    public function __construct()
-    {
-        $this->clients = new ArrayCollection();
+    public function __construct() {
         $this->createdAt = new \DateTimeImmutable();
     }
 
@@ -57,69 +51,52 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->id;
     }
 
-    public function getUsername(): ?string
+    public function getFirstName(): ?string
     {
-        return $this->username;
+        return $this->firstName;
     }
 
-    public function setUsername(string $username): static
+    public function setFirstName(string $firstName): static
     {
-        $this->username = $username;
+        $this->firstName = $firstName;
 
         return $this;
     }
 
-    /**
-     * A visual identifier that represents this user.
-     *
-     * @see UserInterface
-     */
-    public function getUserIdentifier(): string
+    public function getLastName(): ?string
     {
-        return (string) $this->username;
+        return $this->lastName;
     }
 
-    /**
-     * @see UserInterface
-     */
-    public function getRoles(): array
+    public function setLastName(string $lastName): static
     {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
-        return array_unique($roles);
-    }
-
-    public function setRoles(array $roles): static
-    {
-        $this->roles = $roles;
+        $this->lastName = $lastName;
 
         return $this;
     }
 
-    /**
-     * @see PasswordAuthenticatedUserInterface
-     */
-    public function getPassword(): string
+    public function getEmail(): ?string
     {
-        return $this->password;
+        return $this->email;
     }
 
-    public function setPassword(string $password): static
+    public function setEmail(string $email): static
     {
-        $this->password = $password;
+        $this->email = $email;
 
         return $this;
     }
 
-    /**
-     * @see UserInterface
-     */
-    public function eraseCredentials(): void
+    public function getPhoneNumber(): ?string
     {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+        return $this->phoneNumber;
+    }
+
+    public function setPhoneNumber(string $phoneNumber): static
+    {
+        $this->phoneNumber = $phoneNumber;
+
+        return $this;
     }
 
     public function getCreatedAt(): ?\DateTimeImmutable
@@ -134,32 +111,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Client>
-     */
-    public function getClients(): Collection
+    public function getCustomer(): ?Customer
     {
-        return $this->clients;
+        return $this->customer;
     }
 
-    public function addClient(Client $client): static
+    public function setCustomer(?Customer $customer): static
     {
-        if (!$this->clients->contains($client)) {
-            $this->clients->add($client);
-            $client->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeClient(Client $client): static
-    {
-        if ($this->clients->removeElement($client)) {
-            // set the owning side to null (unless already changed)
-            if ($client->getUser() === $this) {
-                $client->setUser(null);
-            }
-        }
+        $this->customer = $customer;
 
         return $this;
     }
