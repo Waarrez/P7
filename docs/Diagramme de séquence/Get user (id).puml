@@ -1,6 +1,6 @@
 @startuml
 
-title Get Phones diagramme de séquence
+title Get users diagramme de séquence
 
 participant CLIENT
 participant APP

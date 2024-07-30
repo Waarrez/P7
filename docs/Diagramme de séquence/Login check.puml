@@ -1,6 +1,6 @@
 @startuml
 
-title Get Phones diagramme de séquence
+title Login diagramme de séquence
 
 participant CLIENT
 participant APP
@@ -13,11 +13,11 @@ activate BDD
 
 alt Si valide
     APP -> BDD : Vérification des données
-    APP --> CLIENT : Retour JWT TOKEN
+    APP --> CLIENT : Retour JWT TOKEN 200
 end
 
 alt Si non valide
-    APP --> CLIENT : 401 Utilisateur non authentifié
+    APP --> CLIENT : 401 JWT Token not found
 end
 
 @enduml

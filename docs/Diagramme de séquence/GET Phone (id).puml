@@ -1,6 +1,6 @@
 @startuml
 
-title Get Phones diagramme de séquence
+title Get Phones with id diagramme de séquence
 
 participant CLIENT
 participant APP

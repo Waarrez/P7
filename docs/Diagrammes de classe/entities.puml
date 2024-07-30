@@ -1,30 +1,90 @@
 @startuml
 
-entity "Phone" {
-  + id : string
-  name : string
-  content : text
-  color : string
-  storage : int
-  price : float
-  image : string
-}
+package "Entities" {
+    class Customer {
+        + id: int
+        + email: string
+        + roles: array
+        + password: string
+        + name: string
+        + address: string
+        + city: string
+        + phoneNumber: string
+        + createdAt: \DateTimeImmutable
+        --
+        + getId(): int
+        + getEmail(): string
+        + setEmail(email: string): void
+        + getRoles(): array
+        + setRoles(roles: array): void
+        + getPassword(): string
+        + setPassword(password: string): void
+        + eraseCredentials(): void
+        + getName(): string
+        + setName(name: string): void
+        + getAddress(): string
+        + setAddress(address: string): void
+        + getCity(): string
+        + setCity(city: string): void
+        + getPhoneNumber(): string
+        + setPhoneNumber(phoneNumber: string): void
+        + getCreatedAt(): \DateTimeImmutable
+        + setCreatedAt(createdAt: \DateTimeImmutable): void
+        + getUsers(): Collection<User>
+        + addUser(user: User): void
+        + removeUser(user: User): void
+    }
 
-entity "User" {
-  + id : string
-    username : string
-    email : string
-    roles : array|json
-    password : string
-    createdAt : datetime
-}
+    class User {
+        + id: int
+        + firstName: string
+        + lastName: string
+        + email: string
+        + phoneNumber: string
+        + createdAt: \DateTimeImmutable
+        --
+        + getId(): int
+        + getFirstName(): string
+        + setFirstName(firstName: string): void
+        + getLastName(): string
+        + setLastName(lastName: string): void
+        + getEmail(): string
+        + setEmail(email: string): void
+        + getPhoneNumber(): string
+        + setPhoneNumber(phoneNumber: string): void
+        + getCreatedAt(): \DateTimeImmutable
+        + setCreatedAt(createdAt: \DateTimeImmutable): void
+        + getCustomer(): Customer
+        + setCustomer(customer: Customer): void
+    }
 
-entity "Client" {
-    + id : string
-     user_id : string
-     username : string
-}
+    class Phone {
+        + id: int
+        + brand: string
+        + model: string
+        + storage: string
+        + price: float
+        + pictures: string
+        + createdAt: \DateTimeImmutable
+        --
+        + getId(): int
+        + getBrand(): string
+        + setBrand(brand: string): void
+        + getModel(): string
+        + setModel(model: string): void
+        + getStorage(): string
+        + setStorage(storage: string): void
+        + getPrice(): float
+        + setPrice(price: float): void
+        + getPictures(): string
+        + setPictures(pictures: string): void
+        + getCreatedAt(): \DateTimeImmutable
+        + setCreatedAt(createdAt: \DateTimeImmutable): void
+    }
 
-User "1" -- "0..*" Client
+    Customer "1" -- "0..*" User : owns
+    User "0..*" -- "1" Customer : assigned to
+
+}
 
 @enduml
