@@ -43,4 +43,6 @@
 ``` /api/doc ```
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/ff8d976a0c90a5053aa2/maintainability)](https://codeclimate.com/github/Waarrez/P7/maintainability)
-
+[![SymfonyInsight](https://insight.symfony.com/projects/ce321f9e-83d7-4588-9bdb-405f6c91c937/big.svg)](https://insight.symfony.com/projects/ce321f9e-83d7-4588-9bdb-405f6c91c937)
+[![PHP Version](https://img.shields.io/badge/php-8.0-blue)](https://www.php.net/releases/8.0/en.php)
+![Composer Version](https://img.shields.io/badge/Composer-2.6.6-blue)
