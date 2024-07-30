@@ -1,6 +1,6 @@
 @startuml
 
-title Get Phones - Diagramme de Séquence avec Vérification JWT
+title Get Phones - Diagramme de Séquence
 
 participant CLIENT
 participant APP

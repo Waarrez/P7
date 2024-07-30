@@ -1,26 +1,41 @@
 @startuml
 
-title Get Phones with id diagramme de séquence
+title Get Phones with ID
 
 participant CLIENT
 participant APP
 participant BDD
+participant AUTH
 
-CLIENT -> APP: Requête GET "/api/phones/id"
+CLIENT -> APP: Requête GET "/api/phones/id" avec JWT Token
 activate APP
-APP -> APP : Vérifie si données valide
 
-alt Si ID valide
-    APP -> BDD  : Récupére les données (findOneBy)
-    activate BDD
-    BDD --> APP : Retour de la requête
-    deactivate BDD
-    APP --> CLIENT : 200 OK
+APP -> AUTH : Vérifie le JWT Token
+activate AUTH
+
+alt Token valide
+    AUTH --> APP : Token authentifié
+    APP -> APP : Vérifie si ID valide
+
+    alt ID valide
+        APP -> BDD : Récupère les données (findOneBy)
+        activate BDD
+        BDD --> APP : Retour de la requête
+        deactivate BDD
+        APP --> CLIENT : 200 OK (Données du téléphone)
+    end
+
+    alt ID invalide
+        BDD --> APP : Identifiant non trouvé
+        APP --> CLIENT : 400 ERREUR (ID invalide)
+    end
+
+else Token invalide
+    AUTH --> APP : Token non authentifié
+    APP --> CLIENT : 401 Unauthorized
 end
 
-alt Si ID invalide
-    BDD --> APP : identifiant non trouvé
-    APP --> CLIENT : 400 ERREUR
-end
+deactivate AUTH
+deactivate APP
 
 @enduml

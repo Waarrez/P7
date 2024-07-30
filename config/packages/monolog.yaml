@@ -1,54 +1,56 @@
+# config/packages/monolog.yaml
+
 monolog:
     channels:
-        - deprecation
+        - deprecation # Deprecations are logged in the dedicated "deprecation" channel when it exists
 
-when@dev:
-    monolog:
-        handlers:
-            main:
-                type: stream
-                path: "%kernel.logs_dir%/%kernel.environment%.log"
-                level: debug
-                channels: ["!event"]
-            console:
-                type: console
-                process_psr_3_messages: false
-                channels: ["!event", "!doctrine", "!console"]
+    handlers:
+        # Configuration pour l'environnement de développement
+        dev_main:
+            type: stream
+            path: "%kernel.logs_dir%/%kernel.environment%.log"
+            level: debug
+            channels: ["!event"]
 
-when@test:
-    monolog:
-        handlers:
-            main:
-                type: fingers_crossed
-                action_level: error
-                handler: nested
-                excluded_http_codes: [404, 405]
-                channels: ["!event"]
-            nested:
-                type: stream
-                path: "%kernel.logs_dir%/%kernel.environment%.log"
-                level: debug
+        dev_console:
+            type: console
+            process_psr_3_messages: false
+            channels: ["!event", "!doctrine", "!console"]
 
-when@prod:
-    monolog:
-        handlers:
-            main:
-                type: fingers_crossed
-                action_level: error
-                handler: nested
-                excluded_http_codes: [404, 405]
-                buffer_size: 50 # Limite de messages tamponnés pour éviter les fuites mémoire
-            nested:
-                type: stream
-                path: php://stderr
-                level: debug # Ajusté à votre besoin spécifique (par exemple, notice)
-                formatter: monolog.formatter.json
-            console:
-                type: console
-                process_psr_3_messages: false
-                channels: ["!event", "!doctrine"]
-            deprecation:
-                type: stream
-                path: php://stderr
-                level: notice # Niveau de log ajusté pour les dépréciations
-                channels: [deprecation] # Canal dédié aux dépréciations
+        # Configuration pour l'environnement de test
+        test_main:
+            type: fingers_crossed
+            action_level: error
+            handler: test_nested
+            excluded_http_codes: [404, 405]
+            channels: ["!event"]
+
+        test_nested:
+            type: stream
+            path: "%kernel.logs_dir%/%kernel.environment%.log"
+            level: debug
+
+        # Configuration pour l'environnement de production
+        prod_main:
+            type: fingers_crossed
+            action_level: error
+            handler: prod_nested
+            excluded_http_codes: [404, 405]
+            buffer_size: 50 # Limite de messages tamponnés pour éviter les fuites mémoire
+
+        prod_nested:
+            type: stream
+            path: php://stderr
+            level: error # Réduit le niveau à error pour éviter trop de détails
+            formatter: monolog.formatter.json
+
+        prod_console:
+            type: console
+            process_psr_3_messages: false
+            channels: ["!event", "!doctrine"]
+
+        prod_deprecation:
+            type: stream
+            path: php://stderr
+            level: error # Ajusté à error pour les dépréciations
+            channels: [deprecation]
