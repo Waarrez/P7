@@ -41,3 +41,6 @@
 ### Lien de la documentation
 
 ``` /api/doc ```
+
+[![Maintainability](https://api.codeclimate.com/v1/badges/ff8d976a0c90a5053aa2/maintainability)](https://codeclimate.com/github/Waarrez/P7/maintainability)
+
