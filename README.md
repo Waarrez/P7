@@ -37,3 +37,7 @@
 
 > Pour vous connecter à l'API, il faut générer un token, chercher un nom d'utiliasteur au hasard dans la BDD, sur Postman entrez l'url suivante "/api/login_check" en méthode **POST** en insérant dans le body en format JSON le nom d'utilisateur ainsi que le mot de passe (exemple {"username" : "test", "password" : "password"}). 
 > Un token sera généré, vous le copiez, vous pouvez alors vous dirigez sur **/api** en **GET** en mettant dans **Authorization** avec le type **Bearer Token** le token que vous avez copié.
+
+### Lien de la documentation
+
+``` /api/doc ```
