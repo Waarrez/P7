@@ -129,6 +129,13 @@ class Customer implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials(): void
+    {
+    }
+
     public function getName(): ?string
     {
         return $this->name;

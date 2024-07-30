@@ -27,7 +27,7 @@ alt Token valide
 
     alt ID invalide
         BDD --> APP : Identifiant non trouvé
-        APP --> CLIENT : 400 ERREUR (ID invalide)
+        APP --> CLIENT : 404 Not found
     end
 
 else Token invalide

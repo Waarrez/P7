@@ -10,23 +10,26 @@ CLIENT -> APP: Requête POST "/api/users" JSON et envoie de token
 activate APP
 APP -> APP : Vérifie si le token et les données sont corrects
 
-alt Si valide
+alt Si le token est valide
   APP -> APP : Deserialize data
-  APP -> BDD : Ajoute les données (users)
-  activate BDD
-  BDD --> APP: User créer
-  deactivate BDD
-  APP --> CLIENT : Confirmation enregistrement
-  deactivate APP
-end
+  APP -> APP : Vérifie si tous les champs requis sont remplis
 
-alt Si token non valide
+  alt Si tous les champs sont remplis
+    APP -> BDD : Ajoute les données (users)
+    activate BDD
+    BDD --> APP: User créé
+    deactivate BDD
+    APP --> CLIENT : Confirmation enregistrement
+  else Si un ou plusieurs champs sont manquants
+    APP --> CLIENT : 400 Champs requis manquants
+  end
+
+else Si token non valide
     APP --> CLIENT : 401 (Utilisateur non authentifié)
-    deactivate APP
 end
 
-alt Si données invalide
-    APP --> CLIENT : 401 Une erreur est survenue
+alt Si données invalides
+    APP --> CLIENT : 400 Données invalides
 end
 
 @enduml
