@@ -1,18 +1,31 @@
 @startuml
 
-title Get Phones with id diagramme de séquence
+title Get Users with JWT Token - Diagramme de Séquence
 
 participant CLIENT
 participant APP
 participant BDD
+participant AUTH
 
 CLIENT -> APP: Requête GET "/api/users"
 activate APP
-APP -> BDD  : Requête find all pour récupérer toutes les données
-activate BDD
-BDD --> APP : Retour de la requête (liste des users)
-deactivate BDD
-APP -> APP : Serialize DATA
-APP --> CLIENT : 200 (Liste des utilisateurs)
+
+APP -> AUTH : Vérifier JWT Token
+activate AUTH
+AUTH --> APP : Token valide / Token invalide
+deactivate AUTH
+
+alt Token valide
+    APP -> BDD  : Requête find all pour récupérer toutes les données
+    activate BDD
+    BDD --> APP : Retour de la requête (liste des utilisateurs)
+    deactivate BDD
+    APP -> APP : Serialize DATA
+    APP --> CLIENT : 200 (Liste des utilisateurs)
+else Token invalide
+    APP --> CLIENT : 401 Unauthorized
+end
+
+deactivate APP
 
 @enduml
