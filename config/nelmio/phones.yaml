@@ -1,0 +1,34 @@
+parameters:
+  nelmio_phones:
+    get:
+      tags: [ Phone ]
+      summary: 'Get phones list'
+      description: 'Get phones list'
+      parameters:
+        -
+          name: page
+          in: query
+          description: 'Page number'
+          required: false
+          schema:
+            type: int
+          examples:
+            default:
+              summary: 'Default value'
+              value: 1
+        -
+          name: perPage
+          in: query
+          description: 'Per page number'
+          required: false
+          schema:
+            type: int
+          examples:
+            default:
+              summary: 'Default value'
+              value: 10
+      responses:
+        '200':
+          description: 'OK'
+        '401':
+          description: 'Unauthorized'
